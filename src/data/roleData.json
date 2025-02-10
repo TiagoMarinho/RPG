@@ -1,0 +1,42 @@
+[
+	{
+		"name": "warrior",
+		"maxHealth": 100, 
+		"maxMana": 50, 
+		"meleeDamage": 15, 
+		"rangedDamage": 5, 
+		"defense": 1.2, 
+		"moveSpeed": 1.0, 
+		"attackSpeed": 1.0
+	},
+	{
+		"name": "archer",
+		"maxHealth": 100, 
+		"maxMana": 50, 
+		"meleeDamage": 10, 
+		"rangedDamage": 10, 
+		"defense": 1.0, 
+		"moveSpeed": 1.0, 
+		"attackSpeed": 1.0
+	},
+	{
+		"name": "mage",
+		"maxHealth": 100, 
+		"maxMana": 100, 
+		"meleeDamage": 8, 
+		"rangedDamage": 8, 
+		"defense": 1.0, 
+		"moveSpeed": 1.0, 
+		"attackSpeed": 1.1
+	},
+	{
+		"name": "assassin",
+		"maxHealth": 80, 
+		"maxMana": 50, 
+		"meleeDamage": 15, 
+		"rangedDamage": 5, 
+		"defense": 1.0, 
+		"moveSpeed": 1.2, 
+		"attackSpeed": 1.2
+	}
+]
