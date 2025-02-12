@@ -1,0 +1,17 @@
+{
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+	],
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"noImplicitAny": false,
+		"strict": true,
+		"baseUrl": "./",
+		"paths": {
+			"@components/*": [
+				"src/components/*"
+			]
+		}
+	}
+}
