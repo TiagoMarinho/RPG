@@ -15,4 +15,20 @@ export default class Character {
 	baseDamage = baseStats.DAMAGE
 
 	skills = new Array(6).fill(null)
+
+	equips = {
+		weapon: null,
+		armor: null,
+		pickaxe: null
+	}
+
+	gold = 0
+
+	equipPickaxe(item) {
+		if (typeof item.miningPower !== 'number') {
+			return console.log(`Can't equip item "${item.name}" as pickaxe.`)
+		}
+
+		this.equips.pickaxe = item
+	}
 }
