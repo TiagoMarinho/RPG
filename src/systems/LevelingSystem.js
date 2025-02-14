@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events'
-import { clamp } from '../utilities/math.mjs'
+import { clamp } from '../utilities/math.js'
 
 const defaults = {
 	EXPERIENCE_PER_LEVEL: 1000,
