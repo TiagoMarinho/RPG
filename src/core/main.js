@@ -1,10 +1,8 @@
-import Character from '../entities/Character.mjs'
+import Character from '../entities/Character.js'
 import readline from 'readline'
-import { wait } from '../utilities/time.mjs'
-import { randomRange } from '../utilities/random.mjs'
-import { createRequire } from 'module'
-const require = createRequire(import.meta.url)
-const items = require('../data/itemData.json')
+import { wait } from '../utilities/time.js'
+import { randomRange } from '../utilities/random.js'
+import items from '../data/itemData.json' assert {type: 'json'}
 
 const main = async () => {
 	const character = new Character();

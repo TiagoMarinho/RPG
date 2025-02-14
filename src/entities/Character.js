@@ -1,5 +1,5 @@
-import ResourcePool from '../systems/ResourcePool.mjs'
-import LevelingSystem from '../systems/LevelingSystem.mjs'
+import ResourcePool from '../systems/ResourcePool.js'
+import LevelingSystem from '../systems/LevelingSystem.js'
 
 const baseStats = {
 	MAX_HEALTH: 100,

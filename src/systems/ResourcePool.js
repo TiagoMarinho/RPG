@@ -1,4 +1,4 @@
-import { clamp } from '../utilities/math.mjs'
+import { clamp } from '../utilities/math.js'
 import { EventEmitter } from 'events'
 
 const defaults = {
