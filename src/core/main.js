@@ -3,6 +3,7 @@ import readline from 'readline'
 import { wait } from '../utilities/time.js'
 import { randomRange } from '../utilities/random.js'
 import items from '../data/itemData.json' assert {type: 'json'}
+import { cl } from '../utilities/log.js'
 
 const main = async () => {
 	const character = new Character()
@@ -31,7 +32,7 @@ const main = async () => {
 				running = false
 				break
 			default:
-				console.log('\nInvalid option, please try again.')
+				console.log(`\n${cl('Invalid option, please try again.', 'red')}`)
 		}
 	}
 	
@@ -59,7 +60,7 @@ const displayActions = async () => {
 }
 
 const displayShop = async () => {
-	console.log('\nWelcome to the shop!');
+	console.log(`\n${cl('Welcome to the shop!', 'green')}`);
 
 	let options = [];
 	let counter = 1;
@@ -67,7 +68,7 @@ const displayShop = async () => {
 	// Loop to list all existing items
 	for (const itemKey in items) {
 		const item = items[itemKey];
-		console.log(`${counter}. Buy ${item.name} (${item.value} gold)`);
+		console.log(`${counter}. Buy ${cl(item.name, 'blue')} (${cl(item.value + ' gold', 'yellow')})`);
 		options.push(itemKey);
 		counter++;
 	}
@@ -104,8 +105,8 @@ const goMining = async (character) => {
 		return
 	}
 
-	console.log(`\nYou currently have ${character.gold} gold`)
-	console.log('\nMining... (Press "q" to stop mining)')
+	console.log(`\nYou currently have ${cl(character.gold + ' gold', 'yellow')}`)
+	console.log(`\nMining... ${cl('(Press "q" to stop mining)', 'grey')}`)
 	let isMining = true
 	let sessionGold = 0
 
@@ -135,13 +136,13 @@ const goMining = async (character) => {
 		if (!isMining) break
 
 		const goldGained = randomRange(1, 5)
-		console.log(`You gained ${goldGained} gold!`)
+		console.log(`You gained ${cl(`${goldGained} gold`, 'yellow')}!`)
 		character.gold += goldGained
 		sessionGold += goldGained
 	}
 
-	console.log(`\nGold gained: ${sessionGold}`)
-	console.log(`Total gold: ${character.gold}`)
+	console.log(`\nGold gained: ${cl(`+${sessionGold}`, 'green')}`)
+	console.log(`You now have: ${cl(`${character.gold} gold`, 'yellow')}`)
 	await wait(3000)
 
 	// Cleanup
@@ -186,13 +187,12 @@ const buyItem = async (character, itemKey) => {
 		console.log(`\nYou already have a ${item.type} equipped, are you sure you want to replace it?`)
 		const answer = await promptUser('Select an option (y/n): ')
 		if (answer !== 'y') return
-
 	}
 	character.gold -= item.value
 	character.equipItem(item)
 
-	console.log(`\nYou bought "${item.name}" for ${item.value} gold`)
-	console.log(`You now have ${character.gold} gold left`)
+	console.log(`\nYou bought "${cl(item.name, 'blue')}" for ${cl(item.value, 'yellow')} gold`)
+	console.log(`You now have ${cl(character.gold, 'yellow')} gold left`)
 	await wait(1500)
 
 };
@@ -201,7 +201,7 @@ const seeItemsEquipped = async (character) => {
 	console.log('\nItems equipped:');
 	for (const type in character.equips) {
 		const item = character.equips[type];
-		console.log(`${type}: ${item ? item.name : 'Nothing equipped'}`);
+		console.log(`${type}: ${item ? cl(item.name, 'blue') : cl('Nothing equipped', 'grey')}`);
 	}
 	await wait(3000);
 };
