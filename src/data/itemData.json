@@ -1,15 +1,22 @@
 {
-    "sword": {
-      "id": "sword",
+    "steel_sword": {
+      "id": "steel_sword",
       "name": "Steel Sword",
       "type": "weapon",
       "damage": 10,
       "value": 100
     },
-    "shield": {
-      "id": "shield",
-      "name": "Wooden Shield",
+    "chainmail_armor": {
+      "id": "chainmail_armor",
+      "name": "Chainmail Armor",
       "type": "armor",
+      "defense": 10,
+      "value": 100
+    },
+    "wood_shield": {
+      "id": "wood_shield",
+      "name": "Wooden Shield",
+      "type": "shield",
       "defense": 5,
       "value": 50
     },
@@ -23,7 +30,7 @@
     "wood_pickaxe": {
       "id": "wood_pickaxe",
       "name": "Wooden Pickaxe",
-      "type": "weapon",
+      "type": "pickaxe",
       "damage": 3,
       "miningPower": 1,
       "value": 25
@@ -31,7 +38,7 @@
     "steel_pickaxe": {
       "id": "steel_pickaxe",
       "name": "Steel Pickaxe",
-      "type": "weapon",
+      "type": "pickaxe",
       "damage": 5,
       "miningPower": 2,
       "value": 75
@@ -39,7 +46,7 @@
     "gold_pickaxe": {
       "id": "gold_pickaxe",
       "name": "Golden Pickaxe",
-      "type": "weapon",
+      "type": "pickaxe",
       "damage": 8,
       "miningPower": 3,
       "value": 150

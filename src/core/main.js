@@ -7,7 +7,7 @@ import items from '../data/itemData.json' assert {type: 'json'}
 const main = async () => {
 	const character = new Character()
 	
-	character.equipPickaxe(items['wood_pickaxe'])
+	character.equipItem(items['wood_pickaxe'])
 
 	let running = true
 	while (running) {
@@ -21,6 +21,12 @@ const main = async () => {
 				await goMining(character)
 				break
 			case '3':
+				await goShopping(character)
+				break
+			case '4':
+				await seeItemsEquipped(character)
+				break
+			case '5':
 				console.log('\nThanks for playing!')
 				running = false
 				break
@@ -44,11 +50,47 @@ const displayActions = async () => {
 	console.log('\nWhat would you like to do?')
 	console.log('1. Do nothing')
 	console.log('2. Go mining')
-	console.log('3. Exit game')
+	console.log('3. Go shopping')
+	console.log('4. See items equipped')
+	console.log('5. Exit game')
 	
-	const answer = await promptUser('Select an option (1-3): ')
+	const answer = await promptUser('Select an option (1-5): ')
 	return answer
 }
+
+const displayShop = async () => {
+	console.log('\nWelcome to the shop!');
+
+	let options = [];
+	let counter = 1;
+
+	// Loop to list all existing items
+	for (const itemKey in items) {
+		const item = items[itemKey];
+		console.log(`${counter}. Buy ${item.name} (${item.value} gold)`);
+		options.push(itemKey);
+		counter++;
+	}
+
+	console.log(`${counter}. Exit shop`);
+	options.push('exit'); // Add an "exit" option
+
+	const answer = await promptUser(`Select an option (1-${counter}): `);
+
+	const numAnswer = parseInt(answer);
+
+	if (isNaN(numAnswer) || numAnswer < 1 || numAnswer > counter) {
+		console.log('\nInvalid option, please try again.');
+		return null;
+	}
+
+	if (numAnswer === counter) {
+		return 'exit';
+	}
+
+	return options[numAnswer - 1]; // Return the item key or "exit"
+};
+
 
 const doNothing = async () => {
 	console.log('\nYou just stand there, doing nothing...')
@@ -112,6 +154,57 @@ const goMining = async (character) => {
 	// Clear any pending input
 	process.stdin.emit('keypress', '', { name: 'enter' })
 }
+
+const goShopping = async (character) => {
+	let shopping = true;
+	while (shopping) {
+		const action = await displayShop();
+
+		if (action === null) {
+			continue;
+		}
+
+		if (action === 'exit') {
+			shopping = false;
+			break;
+		}
+
+		await buyItem(character, action);
+	}
+};
+
+const buyItem = async (character, itemKey) => {
+	const item = items[itemKey];
+
+	if (character.gold < item.value) {
+		console.log(`\nYou don't have enough gold to buy "${item.name}"`)
+		await wait(1000)
+		return
+	}
+
+	if (character.equips[item.type]) {
+		console.log(`\nYou already have a ${item.type} equipped, are you sure you want to replace it?`)
+		const answer = await promptUser('Select an option (y/n): ')
+		if (answer !== 'y') return
+
+	}
+	character.gold -= item.value
+	character.equipItem(item)
+
+	console.log(`\nYou bought "${item.name}" for ${item.value} gold`)
+	console.log(`You now have ${character.gold} gold left`)
+	await wait(1500)
+
+};
+
+const seeItemsEquipped = async (character) => {
+	console.log('\nItems equipped:');
+	for (const type in character.equips) {
+		const item = character.equips[type];
+		console.log(`${type}: ${item ? item.name : 'Nothing equipped'}`);
+	}
+	await wait(3000);
+};
 
 // Handle Ctrl+C for the entire program
 process.on('SIGINT', () => {

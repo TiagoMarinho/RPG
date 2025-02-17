@@ -16,19 +16,22 @@ export default class Character {
 
 	skills = new Array(6).fill(null)
 
+	gold = 0
+
 	equips = {
 		weapon: null,
 		armor: null,
-		pickaxe: null
+		pickaxe: null,
+		shield: null,
+		consumable: null
 	}
 
-	gold = 0
-
-	equipPickaxe(item) {
-		if (typeof item.miningPower !== 'number') {
-			return console.log(`Can't equip item "${item.name}" as pickaxe.`)
+	equipItem(item) {
+		if (!Object.hasOwn(this.equips, item.type)) {
+			console.log(`Can't equip item "${item.name}" as it is not a valid equipment type.`);
 		}
 
-		this.equips.pickaxe = item
+		this.equips[item.type] = item;
 	}
+
 }
