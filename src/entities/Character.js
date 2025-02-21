@@ -1,5 +1,6 @@
 import ResourcePool from '../systems/ResourcePool.js'
 import LevelingSystem from '../systems/LevelingSystem.js'
+import Inventory from "../systems/Inventory.js";
 
 const baseStats = {
 	MAX_HEALTH: 100,
@@ -16,7 +17,9 @@ export default class Character {
 
 	skills = new Array(6).fill(null)
 
-	gold = 0
+	gold = 300
+
+	inventory = new Inventory()
 
 	equips = {
 		weapon: null,
