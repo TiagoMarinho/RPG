@@ -232,7 +232,7 @@ const seeItemsEquipped = async (character) => {
 		console.log(`${type}: ${item ? cl(item.name, 'blue') : cl('Nothing equipped', 'grey')}`);
 	}
 	console.log('\nInventory:');
-	console.log(character.inventory.formattedInventory());
+	console.log(character.inventory.getFormattedInventory());
 	await wait(3000);
 };
 
