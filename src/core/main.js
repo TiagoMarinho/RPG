@@ -7,13 +7,13 @@ import { cl } from '../utilities/log.js'
 
 const main = async () => {
 	const character = new Character()
-	
+
 	character.equipItem(items['wood_pickaxe'])
 
 	let running = true
 	while (running) {
 		const action = await displayActions()
-		
+
 		switch (action) {
 			case '1':
 				await doNothing()
@@ -35,7 +35,7 @@ const main = async () => {
 				console.log(`\n${cl('Invalid option, please try again.', 'red')}`)
 		}
 	}
-	
+
 	rl.close()
 	process.exit(0)
 }
@@ -54,7 +54,7 @@ const displayActions = async () => {
 	console.log('3. Go shopping')
 	console.log('4. See items equipped')
 	console.log('5. Exit game')
-	
+
 	const answer = await promptUser('Select an option (1-5): ')
 	return answer
 }
@@ -99,7 +99,8 @@ const doNothing = async () => {
 }
 
 const goMining = async (character) => {
-	if (!character.equips.pickaxe) {
+	const characterPickaxe = character.equips.pickaxe
+	if (!characterPickaxe) {
 		console.log("\nYou need a pickaxe to go mining!")
 		await wait(2000)
 		return
@@ -130,13 +131,18 @@ const goMining = async (character) => {
 
 	while (isMining) {
 		const baseMiningTime = randomRange(3000, 5000)
-		const miningTime = Math.floor(baseMiningTime / character.equips.pickaxe.miningPower)
+		const miningTime = Math.floor(baseMiningTime / characterPickaxe.miningPower)
 		await wait(miningTime)
 
 		if (!isMining) break
-
+		const foundWeirdCrystal = Math.random() < 0.2
 		const goldGained = randomRange(1, 5)
+		if (foundWeirdCrystal) {
+			console.log(`You found a ${cl('weird crystal', 'blue')}!`)
+			character.inventory.addItem(items['weird_crystal'], 1)
+		}
 		console.log(`You gained ${cl(`${goldGained} gold`, 'yellow')}!`)
+
 		character.gold += goldGained
 		sessionGold += goldGained
 	}
@@ -177,25 +183,47 @@ const goShopping = async (character) => {
 const buyItem = async (character, itemKey) => {
 	const item = items[itemKey];
 
+	if (!item) {
+		console.log(`\n${cl('Invalid item key.', 'red')}`);
+		return;
+	}
+
 	if (character.gold < item.value) {
-		console.log(`\nYou don't have enough gold to buy "${item.name}"`)
-		await wait(1000)
-		return
+		console.log(`\nYou don't have enough gold to buy "${item.name}"`);
+		await wait(1000);
+		return;
 	}
 
 	if (character.equips[item.type]) {
-		console.log(`\nYou already have a ${item.type} equipped, are you sure you want to replace it?`)
-		const answer = await promptUser('Select an option (y/n): ')
-		if (answer !== 'y') return
+		const prompt = `\nYou already have a ${item.type} equipped. Do you want to replace it or add it to your inventory? (replace/add): `;
+		const answer = await promptUser(prompt);
+
+		if (!['replace', 'add'].includes(answer)) {
+			console.log(`\n${cl('Invalid option, please try again.', 'red')}`);
+			return;
+		}
+
+		if (answer === 'add') {
+			character.inventory.addItem(item, 1);
+		} else { // answer === 'replace'
+			const oldItem = character.equips[item.type];
+			character.equipItem(item);
+			character.inventory.addItem(oldItem, 1);
+		}
+
+		character.gold -= item.value;
+		console.log(`\nYou bought "${cl(item.name, 'blue')}" and added it to your ${answer === 'add' ? 'inventory' : `old ${item.type} replaced`}`);
+		console.log(`You now have ${cl(character.gold, 'yellow')} gold left`);
+		await wait(1500);
+
+	} else {
+		character.equipItem(item);
+		character.gold -= item.value;
+		console.log(`\nYou bought "${cl(item.name, 'blue')}" for ${cl(item.value, 'yellow')} gold`);
+		console.log(`You now have ${cl(character.gold, 'yellow')} gold left`);
+		await wait(1500);
 	}
-	character.gold -= item.value
-	character.equipItem(item)
-
-	console.log(`\nYou bought "${cl(item.name, 'blue')}" for ${cl(item.value, 'yellow')} gold`)
-	console.log(`You now have ${cl(character.gold, 'yellow')} gold left`)
-	await wait(1500)
-
-};
+}
 
 const seeItemsEquipped = async (character) => {
 	console.log('\nItems equipped:');
@@ -203,6 +231,8 @@ const seeItemsEquipped = async (character) => {
 		const item = character.equips[type];
 		console.log(`${type}: ${item ? cl(item.name, 'blue') : cl('Nothing equipped', 'grey')}`);
 	}
+	console.log('\nInventory:');
+	console.log(character.inventory.formattedInventory());
 	await wait(3000);
 };
 
