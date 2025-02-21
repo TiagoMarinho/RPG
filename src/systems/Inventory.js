@@ -76,7 +76,11 @@ export default class Inventory {
         }
     }
 
-    formattedInventory() {
+    getInventory() {
+        return this.#items;
+    }
+
+    getFormattedInventory() {
         // Return a view of the inventory slots that are not empty
         return this.#items
             .map((slot, i) => slot ? { slot: i, item: slot.item.name, quantity: slot.quantity } : null)
@@ -122,5 +126,6 @@ export default class Inventory {
         return this.countId(itemId) >= minimum;
     }
 }
+
 
 
