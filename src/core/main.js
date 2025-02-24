@@ -10,7 +10,7 @@ const main = async () => {
 	const character = new Character()
 	const renderEngine = new RenderEngine()
 	console.log(renderEngine.getASCIIRender([character]))
-	RenderEngine.requestAnimationFrame(main)
+	//RenderEngine.requestAnimationFrame(main)
 }
 
 main()
