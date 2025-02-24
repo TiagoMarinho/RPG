@@ -1,13 +1,15 @@
 import ResourcePool from '../systems/ResourcePool.js'
 import LevelingSystem from '../systems/LevelingSystem.js'
 import Inventory from "../systems/Inventory.js";
+import Entity from './Entity.js';
 
 const baseStats = {
 	MAX_HEALTH: 100,
 	MAX_MANA: 50,
 	DAMAGE: 10
 }
-export default class Character {
+export default class Character extends Entity {
+	ASCII_REPRESENTATION = "🧙"
 	health = new ResourcePool(baseStats.MAX_HEALTH)
 	mana = new ResourcePool(baseStats.MAX_MANA)
 
