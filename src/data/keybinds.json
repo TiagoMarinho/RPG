@@ -1,0 +1,8 @@
+[
+	{ "name": "moveUp", "keys": ["w", "arrowUp"] },
+	{ "name": "moveLeft", "keys": ["a", "arrowLeft"] },
+	{ "name": "moveDown", "keys": ["s", "arrowDown"] },
+	{ "name": "moveRight", "keys": ["d", "arrowRight"] },
+	{ "name": "interact", "keys": ["e"] },
+	{ "name": "attack", "keys": ["q"] }
+]
