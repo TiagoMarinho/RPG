@@ -1,9 +1,9 @@
 import readline from 'readline'
 import process from 'process'
-import keybinds from '../data/keybinds.json' assert {type: 'json'}
+import keybinds from '../data/keybinds.json' assert { type: 'json' }
 
 class BindableAction {
-	isDown = false
+	active = false
 	constructor (name) {
 		this.name = name
 	}
@@ -14,7 +14,7 @@ const bindings = keybinds.map(binding => ({
 	action: new BindableAction(binding.name)
 }))
 
-export const keyMap = new Map(
+export const actionsByKey = new Map(
 	bindings.map(binding => 
 		binding.keys.map(key => [
 			key, binding.action
@@ -31,8 +31,19 @@ export default class InputHandler {
 		readline.emitKeypressEvents(process.stdin)
 		process.stdin.setRawMode(true)
 		
-		process.stdin.on('keypress', character => {
-			keyMap[character].isDown = true
+		process.stdin.on('keypress', (_, key) => {
+			console.log(`user pressed "${key.name}"`)
+			
+			if (key.name === "x")
+				process.exit(0)
+
+			const action = actionsByKey.get(key.name)
+			
+			if (!action)
+				return
+
+			action.active = performance.now()
+			console.log(`action: ${action.name}`)
 		})
 	}
 }
