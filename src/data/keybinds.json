@@ -1,8 +1,8 @@
 [
-	{ "name": "moveUp", "keys": ["w", "arrowUp"] },
-	{ "name": "moveLeft", "keys": ["a", "arrowLeft"] },
-	{ "name": "moveDown", "keys": ["s", "arrowDown"] },
-	{ "name": "moveRight", "keys": ["d", "arrowRight"] },
-	{ "name": "interact", "keys": ["e"] },
-	{ "name": "attack", "keys": ["q"] }
+	{ "name": "moveUp", 	"keys": ["w", "up"] },
+	{ "name": "moveLeft", 	"keys": ["a", "left"] },
+	{ "name": "moveDown", 	"keys": ["s", "down"] },
+	{ "name": "moveRight", 	"keys": ["d", "right"] },
+	{ "name": "interact", 	"keys": ["e"] },
+	{ "name": "attack", 	"keys": ["q"] }
 ]
