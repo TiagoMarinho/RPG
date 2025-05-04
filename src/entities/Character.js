@@ -9,7 +9,7 @@ const baseStats = {
 	DAMAGE: 10
 }
 export default class Character extends Entity {
-	ASCII_REPRESENTATION = "🧙"
+	ASCII_REPRESENTATION = "ME"
 	health = new ResourcePool(baseStats.MAX_HEALTH)
 	mana = new ResourcePool(baseStats.MAX_MANA)
 

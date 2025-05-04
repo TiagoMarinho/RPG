@@ -1,5 +1,4 @@
 import { clamp } from '../utilities/math.js'
-import { EventEmitter } from 'events'
 
 const defaults = {
 	MAX: 100,
@@ -9,7 +8,7 @@ export default class ResourcePool {
 	#amount = defaults.MAX
 	#max = defaults.MAX
 	#min = 0
-	emitter = new EventEmitter()
+	emitter = new EventTarget()
 
 	static EVENTS = {
 		POOL_CHANGED: 'pool changed',

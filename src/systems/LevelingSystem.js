@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events'
 import { clamp } from '../utilities/math.js'
 
 const defaults = {
@@ -11,7 +10,7 @@ export default class LevelingSystem {
 
 	#experience
 	#level // fractional
-	emitter = new EventEmitter()
+	emitter = new EventTarget()
 
 	static events = {
 		LEVEL_CHANGED: 'level changed',

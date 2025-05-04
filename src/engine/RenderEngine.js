@@ -1,6 +1,6 @@
 export default class RenderEngine {
-	EMPTY_CELL_ASCII_REPRESENTATION = " ."
-	size = { width: 50, height: 15 } // this should go to a Map/Level/Environment/Board class
+	EMPTY_CELL_ASCII_REPRESENTATION = " _"
+	size = { width: 50, height: 25 } // this should go to a Map/Level/Environment/Board class
 	getASCIIRender (entities) {
 	
 		// draw empty board
@@ -19,9 +19,6 @@ export default class RenderEngine {
 			frameBuffer[entity.position.y][entity.position.x] = entity.ASCII_REPRESENTATION
 		}
 	
-		return frameBuffer.map(line => line.join(``)).join(`\n`)
-	}
-	static requestAnimationFrame (callback) {
-		setTimeout(callback, 1000/30)
+		return frameBuffer.map(line => line.join(``)).join(`<br>`)
 	}
 }
